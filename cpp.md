@@ -193,10 +193,12 @@ const string myMethod(const string& myParam, const string& anotherParam = "");
 
 **Good** Function Overloading
 ```cpp
-string quotedString(int i) {
+string quotedString(int i)
+{
     return "\"" + to_string(i) + "\"";
 }
-string quotedString(string s) {
+string quotedString(string s)
+{
     return "\"" + s "\"";
 }
 ```
