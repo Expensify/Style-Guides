@@ -180,15 +180,15 @@ When deciding whether to give a method a default param or to instead implement f
 Ex:
 **Bad** Function Overloading
 ```cpp
-const string myMethod (const string& myParam);
+const string myMethod(const string& myParam);
 
-const string myMethod (const string& myParam, const string& anotherParam);
+const string myMethod(const string& myParam, const string& anotherParam);
 ```
 
 Instead in the above case we should prefer a default param like so:
 
 ```cpp
-const string myMethod (const string& myParam, const string& anotherParam="");
+const string myMethod(const string& myParam, const string& anotherParam="");
 ```
 
 **Good** Function Overloading
