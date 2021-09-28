@@ -175,32 +175,23 @@ merely because you don't *intend* to change something, use it when it is so impo
 the compiler to forbid it.
 
 ## Default Params vs Function Overloading
-When deciding whether to give a method a default param or to instead implement function overloading you should use default params when the types for the method will be the same and a default is easily set. If you need to allow or use different types then using function overloading should be preferred. 
+When deciding whether to give a method a default param or to instead implement function overloading you should use default params when the types for the method will be the same and a default is easily set. If you need to allow or use different types then using function overloading should be preferred.
 
 Ex:
-Bad Function Overloading
+**Bad** Function Overloading
 ```cpp
 const string myMethod (const string& myParam)
-{
-    myMethod(myParam, "");
-}
 
 const string myMethod (const string& myParam, const string& anotherParam)
-{
-    ...do stuff...
-}
 ```
 
 Instead in the above case we should prefer a default param like so:
 
 ```cpp
 const string myMethod (const string& myParam, const string& anotherParam="")
-{
-    ...do stuff...
-}
 ```
 
-Good Function Overloading
+**Good** Function Overloading
 ```cpp
 string quotedString(int i) {
     return "\"" + to_string(i) + "\"";
