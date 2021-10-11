@@ -606,7 +606,7 @@ foreach ($iterable as $key => $value) {
 }
 ```
 
-Don't pass variables by reference in a foreach loop to avoid the strange behavior described [here](https://www.php.net/manual/en/control-structures.foreach.php)
+Don't pass variables by reference in a foreach loop to avoid the strange behavior described [here](https://www.php.net/manual/en/control-structures.foreach.php),
 which can cause bugs that are tricky to diagnose. Instead, pass variables by value and aggregate results in a separate variable.
 
 **[⬆ back to top](#table-of-contents)**
