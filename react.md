@@ -382,6 +382,14 @@ Let's say you have two separate components that render two different things, but
 same state. You can pass a `render` property to a component to accomplish this. You can read more about how this works
 and when to use it in the [React Docs](https://reactjs.org/docs/render-props.html).
 
+## Do not use hooks in React components
+
+*Exception: If a third party library is being implemented and the only interfact they provide is via hooks, then it's OK to use hooks.*
+
+Hooks have been avoided because we don't want to adopt new React features until they are well established and have clear best practices. We were bitten by this previously when we were an early adopter of React mixins. After a couple of years, React decided that mixins had many downfalls and they moved away from using them which left us with a lot of technical debt.
+
+The conversation about using hooks is not final, but as for now, we choose not to have them in our code.
+
 ## Do not use inheritance for other React components
 ```
 // Bad
