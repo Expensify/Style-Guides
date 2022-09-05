@@ -386,7 +386,7 @@ and when to use it in the [React Docs](https://reactjs.org/docs/render-props.htm
 
 *Exception: If a third party library is being implemented and the only interface they provide is via hooks, then it's OK to use hooks.*
 
-Hooks have been avoided because we don't want to adopt new React features until they are well established and have clear best practices. We were bitten by this previously when we were an early adopter of React mixins. After a couple of years, React decided that mixins had many downfalls and they moved away from using them which left us with a lot of technical debt.
+Hooks have been avoided until we have established clear best practices. We were bitten by this previously when we were an early adopter of React mixins. After a couple of years, React decided that mixins had many downfalls and they moved away from using them which left us with a lot of technical debt.
 
 They are also avoided so that we can maintain consistent code styles everywhere and it doesn't come as a surprise on how something should be built. This decreases the barrier of entry to our codebase because you don't need to be an expert in React in order to work on it.
 
