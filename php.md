@@ -884,7 +884,7 @@ $query = "SELECT
 
 - For complex HTML pages, you MUST use a templating engine
 - The PHP short tag `<?=` can be used to print $variable
-- When adding control structures in templates (if, for, etc) the markup inside them must be intended the same as code
+- When adding control structures in templates (if, for, etc) the markup inside them must be indented the same as code
 would be.
 
 Good:
