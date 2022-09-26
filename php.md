@@ -203,7 +203,8 @@ directory seperator.
 visibility; `static` MUST be declared after the visibility.
 - Opening braces for classes MUST go on the next line, and closing braces MUST go on the next line after the body.
 - Opening braces for methods MUST go on the next line, and closing braces MUST go on the next line after the body.
-- When referring to classes, for example when calling `is_a`, you MUST use the `ClassName::class` syntax and never refer to the classes as strings. eg: to check if a variable is of type `Report`, do `is_a($var, Report::class)` instead of `is_a($var, 'Report')`
+- When working with class names, for example in code [like this](https://github.com/Expensify/Web-Expensify/blob/88d1907100d204efb33658335632b3b8f8321b38/lib/Expensiworks/Job.php#L434)`, you MUST use the `ClassName::class` syntax and never refer to the classes as strings. 
+- Prefer the use of `instanceof` over `is_a`
 
 **[⬆ back to top](#table-of-contents)**
 
