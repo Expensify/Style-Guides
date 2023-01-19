@@ -485,6 +485,61 @@ $foo->bar(
 
 **[⬆ back to top](#table-of-contents)**
 
+### Nullable Method Return Values
+
+When defining method signatures, you SHOULD prefer non-nullable return
+values, especially for scalar types. If the value your method expects to
+return is not found, you SHOULD return the "zero value" for the type
+(e.g. `0`, `''`, `[]`) instead of `null`. There are a couple of
+exceptions ot this:
+
+* If you are modifying an existing method, you MAY keep a nullable
+  return value if the caller checks the return value with `is_null()`
+and for some reason that cannot be changed to `is_empty()` or `!$value`.
+* You MAY use a nullable return value if the "zero value" for your
+  return type is a valid return value.
+
+For example:
+
+```php
+// Good
+function getDomainFromTitle(string $title): string
+{
+    $parts = array_reverse(explode(' ', $title));
+    foreach ($parts as $part) {
+        if (filter_var($part, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME)) {
+            return $part;
+        }
+    }
+    return '';
+}
+
+// Bad
+function getDomainFromTitle(string $title): ?string
+{
+    $parts = array_reverse(explode(' ', $title));
+    foreach ($parts as $part) {
+        if (filter_var($part, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME)) {
+            return $part;
+        }
+    }
+    return null;
+}
+
+// OK
+function getUserScore(): ?int
+{
+    // User's current score could be zero, so `0` is a valid return value.
+    if ($this->gameStarted) {
+        return $this->score;
+    }
+
+    // Return `null` to indicate that game has not started, so user has no score.
+    return null;
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## Control Structures
 
