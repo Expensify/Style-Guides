@@ -485,7 +485,7 @@ $foo->bar(
 
 **[⬆ back to top](#table-of-contents)**
 
-### Multiple Method Return Types
+### Avoid Multiple Method Return Types
 
 When defining method signatures, you SHOULD prefer a single return type
 over multiple return types. This includes prefering non-nullable types
