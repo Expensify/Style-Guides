@@ -490,15 +490,15 @@ $foo->bar(
 When defining method signatures, you SHOULD prefer a single return type
 over multiple return types. This includes prefering non-nullable types
 to nullable types. If the value your method expects to return is not
-found, you SHOULD return the "zero value" for the type (e.g. `0`, `''`,
-`[]`) instead of `null`.
+found, you SHOULD prefer to return the "zero value" for the type (e.g.
+`0`, `''`, `[]`) instead of `null`.
 
 This is because if you return more than one type of data, then you need
 to add checks to exclude one type of data before passing the return
 value to methods that do not support both types. For example, if you
 return `int|string`, then you need to add an `if (is_int($value))` or
 `if (is_string($value))` to the caller before passing `$value` to another
-method. 
+method that just takes a string. 
 
 There are a few notable exceptions to this:
 * If you are modifying an existing method, you MAY keep a nullable or
