@@ -485,19 +485,30 @@ $foo->bar(
 
 **[⬆ back to top](#table-of-contents)**
 
-### Nullable Method Return Values
+### Multiple Method Return Types
 
-When defining method signatures, you SHOULD prefer non-nullable return
-values, especially for scalar types. If the value your method expects to
-return is not found, you SHOULD return the "zero value" for the type
-(e.g. `0`, `''`, `[]`) instead of `null`. There are a couple of
-exceptions ot this:
+When defining method signatures, you SHOULD prefer a single return type
+over multiple return types. This includes prefering non-nullable types
+to nullable types. If the value your method expects to return is not
+found, you SHOULD return the "zero value" for the type (e.g. `0`, `''`,
+`[]`) instead of `null`.
 
-* If you are modifying an existing method, you MAY keep a nullable
-  return value if the caller checks the return value with `is_null()`
-and for some reason that cannot be changed to `empty()` or `!$value`.
-* You MAY use a nullable return value if the "zero value" for your
+This is because if you return more than one type of data, then you need
+to add checks to exclude one type of data before passing the return
+value to methods that do not support both types. For example, if you
+return `int|string`, then you need to add an `if (is_int($value))` or
+`if (is_string($value))` to the caller before passing `$value` to another
+method. 
+
+There are a few notable exceptions to this:
+* If you are modifying an existing method, you MAY keep a nullable or
+  complex return type if the caller checks the return value and that
+code cannot be easily changed. (i.e. You should avoid a large unrelated
+refactor just to change the return type of an existing method.)
+* You MAY use a nullable return type if the "zero value" for your
   return type is a valid return value.
+* You MAY use a nullable return type if your return type is an object
+  and you cannot safely instantiate a "blank" object (e.g. for tests)
 
 For example:
 
