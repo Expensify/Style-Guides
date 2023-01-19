@@ -485,6 +485,72 @@ $foo->bar(
 
 **[⬆ back to top](#table-of-contents)**
 
+### Avoid Multiple Method Return Types
+
+When defining method signatures, you SHOULD prefer a single return type
+over multiple return types. This includes prefering non-nullable types
+to nullable types. If the value your method expects to return is not
+found, you SHOULD prefer to return the "zero value" for the type (e.g.
+`0`, `''`, `[]`) instead of `null`.
+
+This is because if you return more than one type of data, then you need
+to add checks to exclude one type of data before passing the return
+value to methods that do not support both types. For example, if you
+return `int|string`, then you need to add an `if (is_int($value))` or
+`if (is_string($value))` to the caller before passing `$value` to another
+method that just takes a string. 
+
+There are a few notable exceptions to this:
+* If you are modifying an existing method, you MAY keep a nullable or
+  complex return type if the caller checks the return value and that
+code cannot be easily changed. (i.e. You should avoid a large unrelated
+refactor just to change the return type of an existing method.)
+* You MAY use a nullable return type if the "zero value" for your
+  return type is a valid return value.
+* You MAY use a nullable return type if your return type is an object
+  and you cannot safely instantiate a "blank" object (e.g. for tests)
+
+For example:
+
+```php
+// Good
+function getDomainFromTitle(string $title): string
+{
+    $parts = array_reverse(explode(' ', $title));
+    foreach ($parts as $part) {
+        if (filter_var($part, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME)) {
+            return $part;
+        }
+    }
+    return '';
+}
+
+// Bad
+function getDomainFromTitle(string $title): ?string
+{
+    $parts = array_reverse(explode(' ', $title));
+    foreach ($parts as $part) {
+        if (filter_var($part, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME)) {
+            return $part;
+        }
+    }
+    return null;
+}
+
+// OK
+function getUserScore(): ?int
+{
+    // User's current score could be zero, so `0` is a valid return value.
+    if ($this->gameStarted) {
+        return $this->score;
+    }
+
+    // Return `null` to indicate that game has not started, so user has no score.
+    return null;
+}
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## Control Structures
 
