@@ -495,7 +495,7 @@ exceptions ot this:
 
 * If you are modifying an existing method, you MAY keep a nullable
   return value if the caller checks the return value with `is_null()`
-and for some reason that cannot be changed to `is_empty()` or `!$value`.
+and for some reason that cannot be changed to `empty()` or `!$value`.
 * You MAY use a nullable return value if the "zero value" for your
   return type is a valid return value.
 
