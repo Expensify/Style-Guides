@@ -849,7 +849,7 @@ $test = 5;
 ### String
 
 - Always use single quotes `'` if no variables or apostrophes are needed.
-- For strings that require apostrophes, prefer enclosure in double quotes over escaping. That makes it easier to search for the string in code.
+- For strings that require apostrophes, we SHOULD prefer enclosure in double quotes over escaping. That makes it easier to search for the string in code.
 
 ```php
 // Good
