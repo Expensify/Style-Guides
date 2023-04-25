@@ -848,7 +848,17 @@ $test = 5;
 
 ### String
 
-- Always use single quotes `'` if no variables are needed.
+- Always use single quotes `'` if no variables or apostrophes are needed.
+- For strings that require apostrophes, prefer enclosure in double quotes over escaping. That makes it easier to search for the string in code.
+
+```php
+// Good
+$myString = "Alice's car isn't safe to drive home from the shop because it has a cracked fuel tank AND a leaky fuel line."
+
+// Bad
+$myString = 'Alice\'s car isn\'t safe to drive home from the shop because it has a cracked fuel tank AND a leaky fuel line.'
+```
+
 - If variables are needed, prefer interpolation over concatenation as long as it doesn't hurt readability.
 - Complex variable interpolation can be done as follows:
 
