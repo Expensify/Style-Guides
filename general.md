@@ -6,6 +6,7 @@ Language Agnostic Coding Standard
 1. [Acronyms](#acronyms)
 1. [Abbreviations](#abbreviations)
 1. [Simplicity](#simplicity)
+1. [Prefer early returns](#prefer-early-returns)
 
 ## Variables
 - Variables should always start lowercase and be camelCase (caveat see #Acryonyms)
@@ -142,5 +143,27 @@ $Foo = new Foo('bar');
 echo $Foo->bar;
 echo $Foo->getState();
 ```
+
+## Prefer Early Returns
+
+This is actually _enforced_ in our JS/TS code by the [prefer-early-return](https://github.com/Expensify/eslint-config-expensify/blob/main/eslint-plugin-expensify/prefer-early-return.js) rule. However, this best practice applies in all languages, so we're including it here for consistency.
+
+```js
+// Bad
+function myFunc(param) {
+    if (param) {
+        console.log('Do something');
+    }
+}
+
+// Good
+function myFunc(param) {
+    if (!param) {
+        return;
+    }
+    console.log('Do something');
+}
+```
+
 
 **[back to top](#table-of-contents)**
