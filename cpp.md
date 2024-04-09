@@ -200,3 +200,25 @@ string quotedString(string s)
     return "\"" + s "\"";
 }
 ```
+
+## Querying SQL data
+
+When querying data from SQL using `DB::read`, for all new code always access the columns by their names (as opposed to by their indexes).
+
+Ex:
+**Bad**
+```cpp
+SQResult result;
+db.read("SELECT name, value FROM nameValuePairs;", result);
+auto name = result[0][0];
+auto value = result[0][1];
+```
+
+Ex:
+**Good**
+```
+SQResult result;
+db.read("SELECT name, value FROM nameValuePairs;", result);
+auto name = result[0]["name"];
+auto value = result[0]["value"];
+```
