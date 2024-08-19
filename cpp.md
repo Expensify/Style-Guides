@@ -60,6 +60,12 @@ static bool isDeleted(SQLite& db, const int64_t receiptID);
 The `using namespace` statement is *only* allowed on the `std` namespace. That means `std::` does *not have to* be
 prefixed everywhere.
 
+## How to define constants / Use of `inline` declaration
+Define the constant variable in the header file without the `inline` keyword. There may be cases where using the `inline` specifier is needed but these should be rare and used sparingly. If you're adding `inline` "just so we can define and set the variable in the header file" you are holding it wrong. 
+
+The reason to follow standard cpp practice of declaring the variable in the header file and assigning it in the source file (.cpp) is to avoid unnecessary recompilation if the varible changes. You can see the discussion here https://github.com/Expensify/Auth/pull/10803#discussion_r1640322275
+
+
 ## Pointers and references
 
 The `&` and `*` *must* stick to the type, like this: `const string& var`, `Command* cmd`.
