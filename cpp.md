@@ -287,3 +287,15 @@ void myBadFunc(const string& myStr)
     }
 }
 ```
+
+## Using assertions in tests
+
+You should prefer using `ASSERT_` over `EXPECT_` in tests, unless you have a specific reason to do otherwise. The reason for this is because `ASSERT_` will fail the test with the first failed assertion, while `EXPECT_` will fail the test and keep going, making the root cause of the failure less clear.
+
+```cpp
+// GOOD
+ASSERT_TRUE(true);
+
+// Bad
+EXPECT_TRUE(true);
+```
