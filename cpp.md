@@ -243,6 +243,28 @@ const string good = myOptional.value();
 const string bad = *myOptional;
 ```
 
+When making assertions about whether or not an optional has a value, use `.has_value()` rather than relying on its implicit truthiness.
+
+```cpp
+const optional<string> myOptional = optional{"Hello world!"};
+
+// Bad - implicit conversion of optional to boolean
+if (myOptional) {
+    doSomething();
+}
+
+// Good - clear unpacking of optional
+if (myOptional.has_value()) {
+    doSomething();
+}
+
+// Bad - implicit conversion of optional to boolean
+ASSERT_FALSE(myOptional);
+
+// Good - clear unpacking of optional
+ASSERT_FALSE(myOptional.has_value());
+```
+
 ## Prefer early returns
 
 Just like in E/App, we should prefer early returns when it's feasible to do so:
