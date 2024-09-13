@@ -295,9 +295,9 @@ You should prefer using `EXPECT_` over `ASSERT_` in tests, given that when `EXPE
 You should use `ASSERT_` for assertions that need to pass before the next assertions in the test are run. Said differently, if one assertion depends on another one succeeding, you should use `ASSERT_` on the first one because there's no point in continuing to run the test if the `ASSERT_` fails
 
 ```cpp
-// GOOD
-ASSERT_TRUE(true);
+// Good
+ASSERT_TRUE(expression);
 
 // Bad
-EXPECT_TRUE(true);
+EXPECT_TRUE(expression);
 ```
