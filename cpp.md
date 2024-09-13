@@ -228,3 +228,17 @@ db.read("SELECT name, value FROM nameValuePairs;", result);
 auto name = result[0]["name"];
 auto value = result[0]["value"];
 ```
+
+## Handling optionals
+
+When unpacking an optional value, you should use the `.value()` method or `.value_or()` rather than directly dereferencing with `*`
+
+```cpp
+const optional<string> myOptional = optional{"Hello world!"};
+
+// Do this
+const string good = myOptional.value();
+
+// Not this
+const string bad = *myOptional;
+```
