@@ -229,16 +229,39 @@ auto name = result[0]["name"];
 auto value = result[0]["value"];
 ```
 
-## Handling optionals
+## Unpacking optionals
 
 When unpacking an optional value, you should use the `.value()` method or `.value_or()` rather than directly dereferencing with `*`
 
 ```cpp
 const optional<string> myOptional = optional{"Hello world!"};
 
-// Do this
+// Good
 const string good = myOptional.value();
 
-// Not this
+// Bad
 const string bad = *myOptional;
+```
+
+## Prefer early returns
+
+Just like in E/App, we should prefer early returns when it's feasible to do so:
+
+```cpp
+void myGoodFunc(const string& myStr)
+{
+    // good, early return
+    if (myStr.empty()) {
+        return;
+    }
+    doSomething(myStr);
+}
+
+void myBadFunc(const string& myStr)
+{
+    // bad, effects nested in conditional
+    if (!myStr.empty()) {
+        doSomething(myStr);
+    }
+}
 ```
