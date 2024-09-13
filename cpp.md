@@ -228,3 +228,76 @@ db.read("SELECT name, value FROM nameValuePairs;", result);
 auto name = result[0]["name"];
 auto value = result[0]["value"];
 ```
+
+## Unpacking optionals
+
+When unpacking an optional value, you should use the `.value()` method or `.value_or()` rather than directly dereferencing with `*`
+
+```cpp
+const optional<string> myOptional = optional{"Hello world!"};
+
+// Good
+const string good = myOptional.value();
+
+// Bad
+const string bad = *myOptional;
+```
+
+When making assertions about whether or not an optional has a value, use `.has_value()` rather than relying on its implicit truthiness.
+
+```cpp
+const optional<string> myOptional = optional{"Hello world!"};
+
+// Bad - implicit conversion of optional to boolean
+if (myOptional) {
+    doSomething();
+}
+
+// Good - clear unpacking of optional
+if (myOptional.has_value()) {
+    doSomething();
+}
+
+// Bad - implicit conversion of optional to boolean
+ASSERT_FALSE(myOptional);
+
+// Good - clear unpacking of optional
+ASSERT_FALSE(myOptional.has_value());
+```
+
+## Prefer early returns
+
+Just like in E/App, we should prefer early returns when it's feasible to do so:
+
+```cpp
+void myGoodFunction(const string& name)
+{
+    // Good, early return
+    if (name.empty()) {
+        return;
+    }
+    doSomething(name);
+}
+
+void myBadFunction(const string& name)
+{
+    // Bad, nested functionality
+    if (!myStr.empty()) {
+        doSomething(name);
+    }
+}
+```
+
+## Using assertions in tests
+
+You should prefer using `EXPECT_` over `ASSERT_` in tests, given that when `EXPECT_` assertion fails the execution of the test doesn't stop. This is useful when working on tests because you don't have to get one working in order to get the next one to run. Moreover, when assertions fail using `EXPECT_` they output shows the assertion that failed with its line number.
+
+You should use `ASSERT_` for assertions that need to pass before the next assertions in the test are run. Said differently, if one assertion depends on another one succeeding, you should use `ASSERT_` on the first one because there's no point in continuing to run the test if the `ASSERT_` fails
+
+```cpp
+// Good
+ASSERT_TRUE(expression);
+
+// Bad
+EXPECT_TRUE(expression);
+```
