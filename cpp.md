@@ -270,20 +270,20 @@ ASSERT_FALSE(myOptional.has_value());
 Just like in E/App, we should prefer early returns when it's feasible to do so:
 
 ```cpp
-void myGoodFunc(const string& myStr)
+void myGoodFunction(const string& name)
 {
-    // good, early return
-    if (myStr.empty()) {
+    // Good, early return
+    if (name.empty()) {
         return;
     }
-    doSomething(myStr);
+    doSomething(name);
 }
 
-void myBadFunc(const string& myStr)
+void myBadFunction(const string& name)
 {
-    // bad, effects nested in conditional
+    // Bad, nested functionality
     if (!myStr.empty()) {
-        doSomething(myStr);
+        doSomething(name);
     }
 }
 ```
