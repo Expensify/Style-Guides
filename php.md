@@ -30,6 +30,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 [PSR-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
 [PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 [PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
+[PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -164,7 +165,7 @@ if (! function_exists('bar')) {
 ## Namespaces
 
 
-- Namespaces  MUST follow [PSR-4]].
+- Namespaces  MUST follow [[PSR-4]].
 
 - When present, there MUST be one blank line after the `namespace` declaration.
 
