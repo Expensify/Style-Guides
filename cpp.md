@@ -301,3 +301,22 @@ ASSERT_TRUE(expression);
 // Bad
 EXPECT_TRUE(expression);
 ```
+
+## Casting types
+
+You should use explicit casts over implicit casts. This is because:
+* It's clear what type of cast you're doing (the implicit cast can perform any one of the four casts under the hood)
+* It's easier to search casts in our codebase with regex
+* Benefits from compile-time checking
+
+```cpp
+int64_t a = 4;
+int64_t b = 3;
+double c1;
+
+// Good
+c1 = static_cast<double>(a) / static_cast<double>(b);
+
+// Bad
+c1 = ((double) a) / ((double) b);
+```
