@@ -320,3 +320,15 @@ c1 = static_cast<double>(a) / static_cast<double>(b);
 // Bad
 c1 = ((double) a) / ((double) b);
 ```
+
+## Includes
+
+You should use includes with angle brackets and not with strings.
+
+```cpp
+// Good
+#include <auth/lib/Account.h>
+
+// Bad
+#include "../lib/Account.h"
+```
