@@ -207,9 +207,9 @@ string quotedString(string s)
 }
 ```
 
-## Querying SQL data
+## Querying/changing SQL data
 
-When querying data from SQL using `DB::read`, for all new code always access the columns by their names (as opposed to by their indexes).
+- When querying data from SQL using `DB::read`, for all new code always access the columns by their names (as opposed to by their indexes).
 
 Ex:
 **Bad**
@@ -228,6 +228,9 @@ db.read("SELECT name, value FROM nameValuePairs;", result);
 auto name = result[0]["name"];
 auto value = result[0]["value"];
 ```
+
+- When adding new queries in auth code, always prefer to add the queries to the lib class related to that query, especially if they are writes. 
+This allows us to more easily find places where we are updating each of the tables we have and allows us to reuse more code by making it easier to find pieces of code doing the same or similar thing that you need
 
 ## Unpacking optionals
 
