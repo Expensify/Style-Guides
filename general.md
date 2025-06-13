@@ -9,6 +9,7 @@ Language Agnostic Coding Standard
 
 ## Variables
 - Variables should always start lowercase and be camelCase (caveat see #Acryonyms)
+- Use of full words within names is RECOMMENDED; avoid abbreviations that create ambiguity (e.g. Bad: msg Good: message)
 
 ## Acronyms
 - Acronyms - should always be UPPERCASE unless it is the beginning of a variable name in which it should follow Variable
