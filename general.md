@@ -5,6 +5,7 @@ Language Agnostic Coding Standard
 1. [Variables](#variables)
 1. [Acronyms](#acronyms)
 1. [Abbreviations](#abbreviations)
+1. [Comments](#comments)
 1. [Simplicity](#simplicity)
 
 ## Variables
@@ -52,6 +53,45 @@ styles and be lowercase:
 
 ```js
    var policyID = 1234;
+```
+
+## Comments
+- Use // for single line comments. Place single line comments on a newline above the subject of the comment. Put an empty line before the comment unless it’s on the first line of a block.
+
+```js
+// bad
+const active = true;  // is current tab
+
+// good
+// is current tab
+const active = true;
+
+// bad
+function getType() {
+  console.log('fetching type...');
+  // set the default type to 'no type'
+  const type = this.type || 'no type';
+
+  return type;
+}
+
+// good
+function getType() {
+  console.log('fetching type...');
+
+  // set the default type to 'no type'
+  const type = this.type || 'no type';
+
+  return type;
+}
+
+// also good
+function getType() {
+  // set the default type to 'no type'
+  const type = this.type || 'no type';
+
+  return type;
+}
 ```
 
 ## Simplicity
