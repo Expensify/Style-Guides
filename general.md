@@ -56,42 +56,43 @@ styles and be lowercase:
 ```
 
 ## Comments
-- Use // for single line comments. Place single line comments on a newline above the subject of the comment. Put an empty line before the comment unless it’s on the first line of a block.
+- Use // for single line comments. Place single line comments on a newline above the subject of the comment.
+- Put an empty line before the comment unless it’s on the first line of a block.
 
 ```js
-// bad
-const active = true;  // is current tab
+   // bad
+   const active = true;  // is current tab
 
-// good
-// is current tab
-const active = true;
+   // good
+   // is current tab
+   const active = true;
 
-// bad
-function getType() {
-  console.log('fetching type...');
-  // set the default type to 'no type'
-  const type = this.type || 'no type';
+   // bad
+   function getType() {
+   console.log('fetching type...');
+   // set the default type to 'no type'
+   const type = this.type || 'no type';
 
-  return type;
-}
+   return type;
+   }
 
-// good
-function getType() {
-  console.log('fetching type...');
+   // good
+   function getType() {
+   console.log('fetching type...');
 
-  // set the default type to 'no type'
-  const type = this.type || 'no type';
+   // set the default type to 'no type'
+   const type = this.type || 'no type';
 
-  return type;
-}
+   return type;
+   }
 
-// also good
-function getType() {
-  // set the default type to 'no type'
-  const type = this.type || 'no type';
+   // also good
+   function getType() {
+   // set the default type to 'no type'
+   const type = this.type || 'no type';
 
-  return type;
-}
+   return type;
+   }
 ```
 
 ## Simplicity
