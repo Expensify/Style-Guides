@@ -58,7 +58,7 @@ styles and be lowercase:
 ## Comments
 - Place single line comments on a newline above the subject of the comment.
 - Put an empty line before the comment unless it’s on the first line of a block.
-- For languages that support multiple comment styles (e.g. //..., /*...*/, and/or #...), prefer // for single-line comments.
+- For languages that support multiple comment styles (e.g. `//...`, `/*...*/`, and/or `#...`), prefer `//` for single-line comments.
 
 ```js
    // bad
