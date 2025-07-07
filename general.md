@@ -61,37 +61,39 @@ styles and be lowercase:
 
 ```js
    // bad
-   const active = true;  // is current tab
+   const htmlWithoutTags = rawHtml.replace(/<(?!\/?(br|p)\b)[^>]+>/gi, ''); // Strip HTML tags except <br> and <p>
 
    // good
-   // is current tab
-   const active = true;
+   // Strip HTML tags except <br> and <p>
+   const htmlWithoutTags = rawHtml.replace(/<(?!\/?(br|p)\b)[^>]+>/gi, '');
 
    // bad
-   function getType() {
-   console.log('fetching type...');
-   // set the default type to 'no type'
-   const type = this.type || 'no type';
-
-   return type;
+   function toIntFast(x) {
+      console.log('fetching type...');
+      // Bit-wise OR 0 is ~25× faster than parseInt for simple positive ints
+      return x | 0;
    }
 
    // good
-   function getType() {
-   console.log('fetching type...');
+   function toIntFast(x) {
+      console.log(`converting ${x} to int`);
 
-   // set the default type to 'no type'
-   const type = this.type || 'no type';
-
-   return type;
+      // Bit-wise OR 0 is ~25× faster than parseInt for simple positive ints
+      return x | 0;
    }
 
    // also good
-   function getType() {
-   // set the default type to 'no type'
-   const type = this.type || 'no type';
+   function toIntFast(x) {
+      console.log(`converting ${x} to int`);
 
-   return type;
+      // Bit-wise OR 0 is ~25× faster than parseInt for simple positive ints
+      return x | 0;
+   }
+
+   // also good
+   function toIntFast(x) {
+      // Bit-wise OR 0 is ~25× faster than parseInt for simple positive ints
+      return x | 0;
    }
 ```
 
