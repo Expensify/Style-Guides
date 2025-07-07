@@ -5,6 +5,7 @@ Language Agnostic Coding Standard
 1. [Variables](#variables)
 1. [Acronyms](#acronyms)
 1. [Abbreviations](#abbreviations)
+1. [Comments](#comments)
 1. [Simplicity](#simplicity)
 
 ## Variables
@@ -52,6 +53,41 @@ styles and be lowercase:
 
 ```js
    var policyID = 1234;
+```
+
+## Comments
+- Place single line comments on a newline above the subject of the comment.
+- Put an empty line before the comment unless it’s on the first line of a block.
+- For languages that support multiple comment styles (e.g. `//...`, `/*...*/`, and/or `#...`), prefer `//` for single-line comments.
+
+```js
+   // bad
+   const htmlWithoutTags = rawHtml.replace(/<(?!\/?(br|p)\b)[^>]+>/gi, ''); // Strip HTML tags except <br> and <p>
+
+   // good
+   // Strip HTML tags except <br> and <p>
+   const htmlWithoutTags = rawHtml.replace(/<(?!\/?(br|p)\b)[^>]+>/gi, '');
+
+   // bad
+   function isPowerOfTwo(n) {
+      console.log(`checking if ${n} is a power of two`);
+      // Powers of two only have one bit set so n & (n - 1) should clear it
+      return n > 0 && (n & (n - 1)) === 0;
+   }
+
+   // good
+   function isPowerOfTwo(n) {
+      console.log(`checking if ${n} is a power of two`);
+
+      // Powers of two only have one bit set so n & (n - 1) should clear it
+      return n > 0 && (n & (n - 1)) === 0;
+   }
+
+   // also good
+   function isPowerOfTwo(n) {
+      // Powers of two only have one bit set so n & (n - 1) should clear it
+      return n > 0 && (n & (n - 1)) === 0;
+   }
 ```
 
 ## Simplicity
