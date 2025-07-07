@@ -69,32 +69,32 @@ styles and be lowercase:
    const htmlWithoutTags = rawHtml.replace(/<(?!\/?(br|p)\b)[^>]+>/gi, '');
 
    // bad
-   function toIntFast(x) {
-      console.log('fetching type...');
-      // Bit-wise OR 0 is ~25× faster than parseInt for simple positive ints
-      return x | 0;
+   function isPowerOfTwo(n) {
+      console.log(`checking if ${n} is a power of two`);
+      // Powers of two only have one bit set so n & (n - 1) should clear it
+      return n | 0;
    }
 
    // good
-   function toIntFast(x) {
-      console.log(`converting ${x} to int`);
+   function isPowerOfTwo(n) {
+      console.log(`checking if ${n} is a power of two`);
 
-      // Bit-wise OR 0 is ~25× faster than parseInt for simple positive ints
+      // Powers of two only have one bit set so n & (n - 1) should clear it
       return x | 0;
    }
 
    // also good
-   function toIntFast(x) {
-      console.log(`converting ${x} to int`);
+   function isPowerOfTwo(n) {
+      console.log(`checking if ${n} is a power of two`);
 
-      // Bit-wise OR 0 is ~25× faster than parseInt for simple positive ints
+      // Powers of two only have one bit set so n & (n - 1) should clear it
       return x | 0;
    }
 
    // also good
-   function toIntFast(x) {
-      // Bit-wise OR 0 is ~25× faster than parseInt for simple positive ints
-      return x | 0;
+   function isPowerOfTwo(n) {
+      // Powers of two only have one bit set so n & (n - 1) should clear it
+      return n > 0 && (n & (n - 1)) === 0;
    }
 ```
 
