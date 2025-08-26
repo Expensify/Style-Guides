@@ -536,7 +536,7 @@ Returning by reference can be dangerous because it could be used on a temporary 
 const JSON::Value& additionalData = auth.bankAccount.get(db, existingBankAccountID).getAdditionalData();
 ```
 
-#### Safe Solution: Use r-value/l-value Overloads
+#### ✅ Safe Solution: Use r-value/l-value Overloads
 
 Define different overloads for temporary and persistent objects:
 
