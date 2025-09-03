@@ -336,8 +336,7 @@ You should use includes with angle brackets and not with strings.
 #include "../lib/Account.h"
 ```
 
-
-## More on avoiding expensive copying and move semantics
+## Avoiding expensive copying and move semantics
 
 This section outlines common patterns that cause unnecessary JSON copying in C++ and provides solutions to improve performance.
 
@@ -360,7 +359,7 @@ void doSomething(const JSON::Value value) {...}
 ```cpp
 const JSON::Value& something = otherThing["someKey"];
 
-for (const JSON::Value& item : JSON::ArrayValue(someArray)) {...}
+for (const JSON::Value& item : JSON::ConstArrayValue(someArray)) {...}
 
 void doSomething(const JSON::Value& value) {...}
 ```
