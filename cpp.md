@@ -366,7 +366,7 @@ void doSomething(const JSON::Value& value) {...}
 
 #### Function Return Types Matter
 
-When a function returns a reference like `JSON::Value& SomeClass::getSomething()`:
+When a function like `JSON::Value& SomeClass::getSomething()` returns by reference:
 
 **❌ Bad: Creates unnecessary copy**
 ```cpp
@@ -378,16 +378,16 @@ const JSON::Value something = someClassInstance.getSomething();
 const JSON::Value& something = someClassInstance.getSomething();
 ```
 
-When a function returns by value like `JSON::Value SomeClass::getSomething()`:
+When a function like `JSON::Value SomeClass::createSomething()` returns by value :
 
-**⚠️ Misleading: Creates temporary object bound to reference**
+**⚠️ Misleading: Creates temporary object bound to reference (life of temporary object is extended)**
 ```cpp
-const JSON::Value& something = someClassInstance.getSomething();
+const JSON::Value& something = someClassInstance.createSomething();
 ```
 
 **✅ Good: Clearly shows copy intention**
 ```cpp
-const JSON::Value something = someClassInstance.getSomething();
+const JSON::Value something = someClassInstance.createSomething();
 ```
 
 #### Important Note
