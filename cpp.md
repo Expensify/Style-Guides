@@ -398,7 +398,7 @@ These cases are easy to spot when declaring variables as `const` because the con
 
 ### 2. Avoid Initializer List Constructor for Large Objects
 
-The `JSON::Value(initializer_list)` constructor always creates copies. For large objects (transactions, reportActions, reports, personalDetails, participants etc.), use assignment with `move()` instead.
+The `JSON::Value(initializer_list)` constructor always creates copies due to a limitation in C++ when using `initializer_list`, which inherently involves copying. This is not an issue specific to the `JSON::Value` implementation. For large objects (transactions, reportActions, reports, personalDetails, participants, etc.), use assignment with `move()` instead to avoid unnecessary copies.
 
 #### Examples
 
@@ -431,31 +431,34 @@ When data is no longer needed after an operation, use `move()` to transfer owner
 The following example assumes `participants` is not used after creating and queueing the onyx updates.
 
 **❌ Bad: Multiple unnecessary copies**
+
 ```cpp
-const JSON::Value onyxUpdate = OnyxUpdates::createOnyxUpdate(
-    OnyxUpdates::METHOD_MERGE,
-    OnyxUpdates::COLLECTION_REPORT + to_string(reportID),
-    // We use the JSON::Value(initializer_list<pair<const string, Value>> initializerList) copying the `participants`
-    JSON::Value(map<string, JSON::Value>{{OnyxUpdates::KEY_REPORT_PARTICIPANTS, participants}})
+AuthCommand::currentCommand->queueOnyxUpdates(
+    OnyxUpdates::channelTypes::REPORT,
+    to_string(reportID),
+    JSON::Value(list<JSON::Value>{
+        OnyxUpdates::createOnyxUpdate(
+            OnyxUpdates::METHOD_MERGE,
+            OnyxUpdates::COLLECTION_REPORT + to_string(reportID),
+            JSON::Value(map<string, JSON::Value>{{"participants", participants}})
+        )
+    })
 );
-// The initializer_list for list<JSON::Value> is copying `onyxUpdate`
-const JSON::Value onyxUpdates = JSON::Value(list<JSON::Value>{onyxUpdate});
-// Uses the queueOnyxUpdates overload that receives the updates as `const JSON::Value& onyxUpdates` which will result in a copy
-AuthCommand::currentCommand->queueOnyxUpdates(OnyxUpdates::channelTypes::REPORT, to_string(reportID), onyxUpdates);
 ```
 
 **✅ Good: Zero unnecessary copies**
 ```cpp
-JSON::Value onyxUpdate = OnyxUpdates::createOnyxUpdate(
-    OnyxUpdates::METHOD_MERGE,
-    OnyxUpdates::COLLECTION_REPORT + to_string(reportID),
-    // `move(participants)` to avoid copy and avoid the initializer_list constructor by using the helper function `JSON::Value::singleEntryObject`
-    JSON::Value::singleEntryObject(OnyxUpdates::KEY_REPORT_PARTICIPANTS, move(participants))
+AuthCommand::currentCommand->queueOnyxUpdates(
+    OnyxUpdates::channelTypes::REPORT,
+    to_string(reportID),
+    JSON::Value::singleItemArray(
+        OnyxUpdates::createOnyxUpdate(
+            OnyxUpdates::METHOD_MERGE,
+            OnyxUpdates::COLLECTION_REPORT + to_string(reportID),
+            JSON::Value::singleEntryObject("participants", move(participants))
+        )
+    )
 );
-// `move(onyxUpdate)` to avoid copy and the initializer_list constructor by using helper function `JSON::Value::singleItemArray`
-JSON::Value onyxUpdates = JSON::Value::singleItemArray(move(onyxUpdate));
-// `move(OnyxUpdates)` to avoid copy and use the overload `JSON::Value&& onyxUpdates`
-AuthCommand::currentCommand->queueOnyxUpdates(OnyxUpdates::channelTypes::REPORT, to_string(reportID), move(onyxUpdates));
 ```
 
 #### Available Move-Enabled Functions
