@@ -480,8 +480,6 @@ Value& operator=(Value&& v);
 
 **Never use an object after it has been moved.** Moved objects are in a "valid but unspecified state" and can cause unexpected behavior.
 
-> Unless otherwise specified, all standard library objects that have been moved from are placed in a "valid but unspecified state", meaning the object's class invariants hold (so functions without preconditions, such as the assignment operator, can be safely used on the object after it was moved from).
-
 **Related PR:** [Example implementation](https://github.com/Expensify/Auth/pull/14820)
 
 ### 4. Handle Ternary Operations with References Carefully
