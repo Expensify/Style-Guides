@@ -342,7 +342,7 @@ This section outlines common patterns that cause unnecessary JSON copying in C++
 
 ### 1. Use References for Read-Only Operations
 
-When declaring a `JSON::Value` as `const`, it cannot be modified, so we should always use references to avoid unnecessary copies.
+When declaring a `JSON::Value` as `const`, it cannot be modified, so we should always use references to avoid unnecessary copies when iterating or passing it into a function.
 
 #### Examples
 
@@ -396,15 +396,15 @@ These cases are easy to spot when declaring variables as `const` because the con
 
 **Related PR:** [Example implementation](https://github.com/Expensify/Auth/pull/16628/files)
 
-### 2. Use Move Semantics and Helper Functions
+### 2. Use Move Semantics and move-enabled Functions
 
-When data is no longer needed after an operation, use `move()` to transfer ownership and avoid copies. Combine with `JSON::Value` helper functions for cleaner code.
+When data is no longer needed after an operation, use `move()` to transfer ownership and avoid copies:
 
 #### Examples
 
 The following example assumes `participants` is not used after creating and queueing the onyx updates.
 
-**❌ Bad: Multiple unnecessary copies**
+**❌ Bad: Unnecessary copy of participants**
 
 ```cpp
 AuthCommand::currentCommand->queueOnyxUpdates(
@@ -429,7 +429,7 @@ AuthCommand::currentCommand->queueOnyxUpdates(
         OnyxUpdates::createOnyxUpdate(
             OnyxUpdates::METHOD_MERGE,
             OnyxUpdates::COLLECTION_REPORT + to_string(reportID),
-            JSON::Value::singleEntryObject("participants", move(participants))
+            JSON::Value(map<string, JSON::Value>{{"participants", move(participants)}})
         )
     )
 );
