@@ -396,15 +396,15 @@ These cases are easy to spot when declaring variables as `const` because the con
 
 **Related PR:** [Example implementation](https://github.com/Expensify/Auth/pull/16628/files)
 
-### 2. Use Move Semantics and move-enabled Functions
+### 2. Use Move Semantics and Helper Functions
 
-When data is no longer needed after an operation, use `move()` to transfer ownership and avoid copies:
+When data is no longer needed after an operation, use `move()` to transfer ownership and avoid copies. Combine with `JSON::Value` helper functions for cleaner code.
 
 #### Examples
 
 The following example assumes `participants` is not used after creating and queueing the onyx updates.
 
-**❌ Bad: Unnecessary copy of participants**
+**❌ Bad: Multiple unnecessary copies**
 
 ```cpp
 AuthCommand::currentCommand->queueOnyxUpdates(
@@ -429,7 +429,7 @@ AuthCommand::currentCommand->queueOnyxUpdates(
         OnyxUpdates::createOnyxUpdate(
             OnyxUpdates::METHOD_MERGE,
             OnyxUpdates::COLLECTION_REPORT + to_string(reportID),
-            JSON::Value(map<string, JSON::Value>{{"participants", move(participants)}})
+            JSON::Value::singleEntryObject("participants", move(participants))
         )
     )
 );
