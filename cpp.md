@@ -342,7 +342,7 @@ This section outlines common patterns that cause unnecessary JSON copying in C++
 
 ### 1. Use References for Read-Only Operations
 
-When declaring a `JSON::Value` as `const`, it cannot be modified, so we should always use references to avoid unnecessary copies.
+When declaring a `JSON::Value` as `const`, it cannot be modified, so we should always use references to avoid unnecessary copies when iterating or passing it into a function.
 
 #### Examples
 
@@ -396,33 +396,7 @@ These cases are easy to spot when declaring variables as `const` because the con
 
 **Related PR:** [Example implementation](https://github.com/Expensify/Auth/pull/16628/files)
 
-### 2. Avoid Initializer List Constructor for Large Objects
-
-The `JSON::Value(initializer_list)` constructor always creates copies due to a limitation in C++ when using `initializer_list`, which inherently involves copying. This is not an issue specific to the `JSON::Value` implementation. For large objects (transactions, reportActions, reports, personalDetails, participants, etc.), use assignment with `move()` instead to avoid unnecessary copies.
-
-#### Examples
-
-**❌ Bad: Forces copies**
-```cpp
-return JSON::Value({
-    {"structuredReportsForOnyx", move(structuredReportsForOnyx)},
-    {"structuredReportsNVPsForOnyx", move(structuredReportsNVPsForOnyx)},
-    {"lastMessageData", move(lastMessageData)}
-});
-```
-
-**✅ Good: Avoids copies**
-```cpp
-JSON::Value returnValue(JSON::OBJECT);
-returnValue["structuredReportsForOnyx"] = move(structuredReportsForOnyx);
-returnValue["structuredReportsNVPsForOnyx"] = move(structuredReportsNVPsForOnyx);
-returnValue["lastMessageData"] = move(lastMessageData);
-return returnValue;
-```
-
-**Related PR:** [Example implementation](https://github.com/Expensify/Auth/pull/14365)
-
-### 3. Use Move Semantics and Helper Functions
+### 2. Use Move Semantics and Helper Functions
 
 When data is no longer needed after an operation, use `move()` to transfer ownership and avoid copies. Combine with `JSON::Value` helper functions for cleaner code.
 
@@ -482,7 +456,7 @@ Value& operator=(Value&& v);
 
 **Related PR:** [Example implementation](https://github.com/Expensify/Auth/pull/14820)
 
-### 4. Handle Ternary Operations with References Carefully
+### 3. Handle Ternary Operations with References Carefully
 
 Assigning ternary operator results to references can cause copies if one side creates a temporary object.
 
@@ -503,7 +477,7 @@ const JSON::Value& customLists = policy.hasMember("customLists") ? policy["custo
 const JSON::Value& customLists = policy.getMemberWithDefault("customLists", JSON::Utils::EMPTY_ARRAY);
 ```
 
-### 5. Optimize Functions Returning by Value
+### 4. Optimize Functions Returning by Value
 
 Functions returning by value always create copies, even when assigned to reference variables.
 
@@ -552,7 +526,7 @@ With these overloads, the dangerous code above will call the correct overload an
 
 **Related PR:** [Example implementation](https://github.com/Expensify/Auth/pull/15772/files#r2157875973) (see overloads added in JSON::Value)
 
-### 6. Optimize Transformer Functions
+### 5. Optimize Transformer Functions
 
 These are functions that take parameters, transform the data, and return it in a different shape.
 
