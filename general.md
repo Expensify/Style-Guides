@@ -11,7 +11,7 @@ Language Agnostic Coding Standard
 ## Variables
 - Variables should always start lowercase and be camelCase (caveat see #Acryonyms)
 - Use of full words within names is RECOMMENDED; avoid abbreviations that create ambiguity (e.g. Bad: msg Good: message)
-- Boolean variables should be prefixed with "should", "does", or "will" (e.g., `shouldRunThis`, `doesHaveTransactions`).
+- Boolean variables should be prefixed with an auxillary verb such as "is", "should", "has", "does", or "will" (e.g., `shouldRunThis`, `doesHaveTransactions`).
 - Count variables should be suffixed with "count" (e.g., `transactionsCount` instead of `numberTransactions`).
 
 ## Acronyms
