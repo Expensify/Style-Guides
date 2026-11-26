@@ -298,11 +298,21 @@ You should prefer using `EXPECT_` over `ASSERT_` in tests, given that when `EXPE
 You should use `ASSERT_` for assertions that need to pass before the next assertions in the test are run. Said differently, if one assertion depends on another one succeeding, you should use `ASSERT_` on the first one because there's no point in continuing to run the test if the `ASSERT_` fails
 
 ```cpp
-// Good
-ASSERT_TRUE(expression);
+// Good - if the first assertion fails, the test still continues
+EXPECT_EQ(result.status, 200);
+EXPECT_EQ(result.body, "OK");
 
-// Bad
-EXPECT_TRUE(expression);
+// Bad - the first assertion failing stops the test
+ASSERT_EQ(result.status, 200);
+ASSERT_EQ(result.body, "OK");
+
+// Good - stops immediately if the pointer is null so the next line doesn't crash
+ASSERT_NE(ptr, nullptr);
+EXPECT_EQ(ptr->value, expected);
+
+// Bad - the test would crash on the next line for a null pointer failure
+EXPECT_NE(ptr, nullptr);
+EXPECT_EQ(ptr->value, expected);
 ```
 
 ## Casting types
